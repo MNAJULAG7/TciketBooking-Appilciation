@@ -1,0 +1,167 @@
+services:
+  # ---------------- API GATEWAY ----------------
+  api-gateway:
+    build: ./apigateway
+    ports:
+      - "8222:8222"
+    depends_on:
+      - eureka-server
+      - config-server
+    networks:
+      - backend
+    restart: always
+  # ---------------- CONFIG SERVER ----------------
+  config-server:
+    build: ./config-server
+    ports:
+      - "8888:8888"
+    networks:
+      - backend
+    restart: always
+  # ---------------- EUREKA ----------------
+  eureka-server:
+    build: ./eurekaserver
+    ports:
+      - "8761:8761"
+    networks:
+      - backend
+    restart: always
+
+  # ---------------- EVENT SERVICE ----------------
+  event-service:
+    build: ./event-service
+    ports:
+      - "9001:9001"
+    depends_on:
+      - mysql
+      - eureka-server
+      - config-server
+    networks:
+      - backend
+    environment:
+      DB_USER: root
+      DB_PASS: manju
+    restart: always
+  # ---------------- USER SERVICE ----------------
+  user-service:
+    build: ./user-service
+    ports:
+      - "9000:9000"
+    depends_on:
+      - mysql
+      - eureka-server
+      - config-server
+    networks:
+      - backend
+    environment:
+      DB_USER: root
+      DB_PASS: manju
+    restart: always
+
+  # ---------------- BOOKING SERVICE ----------------
+  booking-service:
+    build: ./booking-service
+    ports:
+      - "9003:9003"
+    depends_on:
+      - mysql
+      - kafka
+      - eureka-server
+      - config-server
+    networks:
+      - backend
+    environment:
+      DB_USER: root
+      DB_PASS: manju
+    restart: always
+
+  # ---------------- SEAT SERVICE ----------------
+  seat-service:
+    build: ./seat-service
+    ports:
+      - "9002:9002"
+    depends_on:
+      - mysql
+      - eureka-server
+      - config-server
+    networks:
+      - backend
+    environment:
+      DB_USER: root
+      DB_PASS: manju
+    restart: always
+  # ---------------- PAYMENT SERVICE ----------------
+  payment-service:
+    build: ./payment-service
+    ports:
+      - "9004:9004"
+    depends_on:
+      - mysql
+      - eureka-server
+      - kafka
+      - config-server
+    networks:
+      - backend
+    environment:
+      DB_USER: root
+      DB_PASS: manju
+    restart: always
+
+  # ---------------- MYSQL ----------------
+  mysql:
+    image: mysql:8
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: manju
+
+    ports:
+      - "3308:3306"
+    networks:
+      - backend
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: mysql
+      MYSQL_ROOT_PASSWORD: root
+    depends_on:
+      - mysql
+    networks:
+      - backend
+
+  # ---------------- ZOOKEEPER ----------------
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    networks:
+      - backend
+
+  # ---------------- KAFKA ----------------
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - backend
+
+networks:
+  backend:
+
+volumes:
+  mysql_data:
