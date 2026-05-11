@@ -6,8 +6,8 @@ The application allows users to browse events, book seats, make payments, and ma
 
 This project follows modern backend development practices using Spring Cloud, Docker, Kafka, and MySQL.
 
-#Tech Stack
-#Backend
+Tech Stack
+Backend
   Java 17
   Spring Boot
   Spring Cloud
@@ -15,19 +15,19 @@ This project follows modern backend development practices using Spring Cloud, Do
   Spring Data JPA
   Hibernate
   
-#Microservices & Cloud
+Microservices & Cloud
   Eureka Server (Service Discovery)
   API Gateway
   OpenFeign Client
   Config Server
   
-#Messaging
+Messaging
   Apache Kafka
   
-#Database
+Database
   MySQL
   
-#DevOps & Tools
+DevOps & Tools
   Docker
   Docker Compose
   Maven
@@ -36,7 +36,7 @@ This project follows modern backend development practices using Spring Cloud, Do
 
 The project is designed using Microservices Architecture.
 
-#Services included:
+Services included:
   User Service
   Event Service
   Booking Service
@@ -46,8 +46,8 @@ The project is designed using Microservices Architecture.
   Eureka Server
   Config Server
   
-#Features
-#System Features
+Features
+System Features
   Service Discovery using Eureka
   Centralized Routing with API Gateway
   Inter-service Communication using Feign Client
