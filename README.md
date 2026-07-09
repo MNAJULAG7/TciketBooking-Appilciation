@@ -266,10 +266,21 @@ Booking Service communicates with:
 - Payment Service
 
 
-### Event Driven Communication
 
-Implemented Apache Kafka for asynchronous communication.
+---
 
-Example:
+# Docker Implementation
 
-After successful booking:
+All services can be containerized using Docker.
+
+Docker Compose manages multiple containers.
+Author
+---
+
+Manjula G
+
+Java Backend Developer
+
+Skills:
+
+Java | Spring Boot | Microservices | REST API | MySQL | Kafka | Docker
