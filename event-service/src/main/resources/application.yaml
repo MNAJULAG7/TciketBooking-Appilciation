@@ -2,7 +2,8 @@ spring:
   application:
     name: event-service
   config:
-    import: optional:configserver:http://config-server:8888
+    import: optional:configserver:http://172.31.14.65:8888
+#    import: optional:configserver:http://config-server:8888
 
 
 

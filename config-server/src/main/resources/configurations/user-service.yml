@@ -1,7 +1,8 @@
 eureka:
   client:
     service-url:
-      defaultZone: http://eureka-server:8761/eureka
+      defaultZone: http://172.31.14.65:8761/eureka
+#      defaultZone: http://eureka-server:8761/eureka
 
 server:
   port: 9000
@@ -9,7 +10,8 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://mysql:3306/user_service_db
+    url: jdbc:mysql://ticketbooking-rds.crq0mswcup0n.ap-south-1.rds.amazonaws.com:3306/user_service_db
+#    url: jdbc:mysql://mysql:3306/user_service_db
 #    username: root
 #    password: manju
     username: ${DB_USER}
